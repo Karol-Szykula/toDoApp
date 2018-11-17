@@ -2,7 +2,7 @@
 
 class Task {
     constructor(taskGoal) {
-        this.taskGoal = taskGoal
+        this.taskGoal = taskGoal || ''
         this.isCompleted = false
     }
 }
@@ -18,10 +18,30 @@ class ToDoApp {
 
     init() {
 
+        this.render()
     }
 
     render() {
+        //render UI
+        const appDiv = document.createElement('div')
 
+        const addTaskInputField = document.createElement("INPUT");
+        addTaskInputField.setAttribute("type", "text");
+
+        const inputTaskButton = document.createElement('button')
+        inputTaskButton.innerHTML = 'Dodaj'
+
+        const inputTaskDiv = document.createElement('div')
+        inputTaskDiv.appendChild(addTaskInputField)
+        inputTaskDiv.appendChild(inputTaskButton)
+        appDiv.appendChild(inputTaskDiv)
+
+        // fill UI with data
+
+
+
+
+        this.whereToRender.appendChild(appDiv)
     }
 
     addTask() {
@@ -66,5 +86,3 @@ class ToDoApp {
 
 
 const toDoApp = new ToDoApp()
-
-console.log(toDoApp.whereToRender)
