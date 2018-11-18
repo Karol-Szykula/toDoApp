@@ -81,9 +81,12 @@ class ToDoApp {
         const orderedList = document.createElement('ol')
         this.tasks.forEach((element, taskIndex) => {
             const listElement = document.createElement('li')
-            listElement.innerText = `${element}`
+            listElement.innerText = `${element}  `
 
-            //dodać kliknięcie na task - mark completed
+            listElement.addEventListener('click', (event) => {
+                event.stopPropagation()
+                listElement.style.textDecoration = 'line-through'
+            })
 
             const deleteTaskButton = document.createElement('button')
             deleteTaskButton.innerHTML = 'Usuń'
@@ -109,10 +112,6 @@ class ToDoApp {
         this.tasks.splice(taskIndex, 1);
 
         this.render()
-    }
-
-    markTaskCompleted() {
-
     }
 
     findTask() {
