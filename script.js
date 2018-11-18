@@ -16,17 +16,18 @@ class ToDoApp {
         this.whereToRender = whereToRender || document.body
         this.tasks = []
 
+        this.init()
+    }
+
+    init() {
+        this.loadDataFromLocalStorage()
+
         this.tasks.push(new Task('kupić mleko'))
         this.tasks.push(new Task('posprzątać'))
         this.tasks.push(new Task('pozamiatać'))
         this.tasks.push(new Task('pouczyć się'))
         this.tasks.push(new Task('naprawić radio'))
         this.tasks.push(new Task('odpocząć'))
-
-        this.init()
-    }
-
-    init() {
 
         this.render()
     }
@@ -126,11 +127,13 @@ class ToDoApp {
     addTask(addTaskInputField) {
         this.tasks.push(new Task(addTaskInputField.value))
 
+        this.saveDataToLocalStorage()
         this.render()
     }
 
     removeTask(taskIndex) {
         this.tasks.splice(taskIndex, 1);
+        this.saveDataToLocalStorage()
 
         this.render()
     }
@@ -140,11 +143,11 @@ class ToDoApp {
     }
 
     saveDataToLocalStorage() {
-
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
     }
 
-    loadDataToLocalStorage() {
-
+    loadDataFromLocalStorage() {
+        this.tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
     }
 
     showAllTasks() {
@@ -160,8 +163,5 @@ class ToDoApp {
     }
 
 }
-
-
-
 
 const toDoApp = new ToDoApp()
