@@ -5,6 +5,10 @@ class Task {
         this.taskGoal = taskGoal || ''
         this.isCompleted = false
     }
+
+    toggleCompleted() {
+        this.isCompleted = !this.isCompleted
+    }
 }
 
 class ToDoApp {
@@ -12,6 +16,12 @@ class ToDoApp {
         this.whereToRender = whereToRender || document.body
         this.tasks = []
 
+        this.tasks.push(new Task('kupić mleko'))
+        this.tasks.push(new Task('posprzątać'))
+        this.tasks.push(new Task('pozamiatać'))
+        this.tasks.push(new Task('pouczyć się'))
+        this.tasks.push(new Task('naprawić radio'))
+        this.tasks.push(new Task('odpocząć'))
 
         this.init()
     }
@@ -27,6 +37,7 @@ class ToDoApp {
 
         const addTaskInputField = document.createElement("input");
         addTaskInputField.setAttribute("type", "text");
+        // addTaskInputField.style.width = '100%'
         const inputTaskButton = document.createElement('button')
         inputTaskButton.innerHTML = 'Dodaj'
 
@@ -81,11 +92,21 @@ class ToDoApp {
         const orderedList = document.createElement('ol')
         this.tasks.forEach((element, taskIndex) => {
             const listElement = document.createElement('li')
-            listElement.innerText = `${element}  `
+            listElement.innerText = `${element.taskGoal}  `
+
+            if (element.isCompleted === true) {
+                listElement.style.textDecoration = 'line-through'
+            }
+            else {
+                listElement.style.textDecoration = 'none'
+            }
 
             listElement.addEventListener('click', (event) => {
                 event.stopPropagation()
-                listElement.style.textDecoration = 'line-through'
+
+                element.toggleCompleted()
+
+                this.render()
             })
 
             const deleteTaskButton = document.createElement('button')
@@ -103,7 +124,7 @@ class ToDoApp {
     }
 
     addTask(addTaskInputField) {
-        this.tasks.push(addTaskInputField.value)
+        this.tasks.push(new Task(addTaskInputField.value))
 
         this.render()
     }
