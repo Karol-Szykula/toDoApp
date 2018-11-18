@@ -3,10 +3,15 @@
         constructor(taskGoal) {
             this.taskGoal = taskGoal || ''
             this.isCompleted = false
+            this.isVisible = true
         }
 
         toggleCompleted() {
             this.isCompleted = !this.isCompleted
+        }
+
+        toggleVisible() {
+            this.isVisible = !this.isVisible
         }
     }
 
@@ -22,9 +27,14 @@
             this.loadDataFromLocalStorage()
 
             this.tasks.push(new Task('kupić mleko'))
-            this.tasks.push(new Task('posprzątać'))
+            this.tasks.push(new Task('wypić mleko'))
+            this.tasks.push(new Task('ugotować mleko'))
+            this.tasks.push(new Task('posprzątać dom'))
+            this.tasks.push(new Task('posprzątać garaż'))
             this.tasks.push(new Task('pozamiatać'))
+            this.tasks.push(new Task('pozamiatać schody'))
             this.tasks.push(new Task('pouczyć się'))
+            this.tasks.push(new Task('pouczyć się js'))
             this.tasks.push(new Task('naprawić radio'))
             this.tasks.push(new Task('odpocząć'))
 
@@ -32,7 +42,7 @@
         }
 
         render() {
-            //render UI
+            //prepare UI elements
             const appDiv = document.createElement('div')
 
             const addTaskInputField = document.createElement("input");
@@ -88,36 +98,11 @@
             listOfTaksDiv.appendChild(listOfTaksBodyDiv)
             appDiv.appendChild(listOfTaksDiv)
 
-            // fill UI with data
-            const orderedList = document.createElement('ol')
-            this.tasks.forEach((element, taskIndex) => {
-                const listElement = document.createElement('li')
-                listElement.innerText = `${element.taskGoal}  `
-
-                if (element.isCompleted === true) {
-                    listElement.style.textDecoration = 'line-through'
-                }
-                else {
-                    listElement.style.textDecoration = 'none'
-                }
-
-                listElement.addEventListener('click', (event) => {
-                    event.stopPropagation()
-
-                    element.toggleCompleted()
-
-                    this.render()
-                })
-
-                const deleteTaskButton = document.createElement('button')
-                deleteTaskButton.innerHTML = 'Usuń'
-                deleteTaskButton.addEventListener('click', this.removeTask.bind(this, taskIndex))
-                listElement.appendChild(deleteTaskButton)
-
-                orderedList.appendChild(listElement)
-            })
-            listOfTaksBodyDiv.appendChild(orderedList)
-
+            // findTaskButton.addEventListener('click', this.findTask.bind(this, findTaskInputField.value, listOfTaksBodyDiv))
+            showAllTasksButton.addEventListener('click', this.showAllTasks.bind(this, listOfTaksBodyDiv))
+            showCompletedTasksButton.addEventListener('click', this.showCompletedTasks.bind(this, listOfTaksBodyDiv))
+            showNotCompletedTasksButton.addEventListener('click', this.showNotCompletedTasks.bind(this, listOfTaksBodyDiv))
+            this.showAllTasks(listOfTaksBodyDiv)
 
             this.whereToRender.innerHTML = ''
             this.whereToRender.appendChild(appDiv)
@@ -137,7 +122,7 @@
             this.render()
         }
 
-        findTask() {
+        findTask(task) {
 
         }
 
@@ -149,16 +134,110 @@
             this.tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
         }
 
-        showAllTasks() {
+        showAllTasks(listOfTaksBodyDiv) {
+            listOfTaksBodyDiv.innerHTML = ''
+            // console.log('showall')
+            const orderedList = document.createElement('ol')
+            this.tasks.forEach((element, taskIndex) => {
 
+                if (element.isVisible === true) {
+                    const listElement = document.createElement('li')
+                    listElement.innerText = `${element.taskGoal}  `
+
+                    if (element.isCompleted === true) {
+                        listElement.style.textDecoration = 'line-through'
+                    }
+                    else {
+                        listElement.style.textDecoration = 'none'
+                    }
+
+                    listElement.addEventListener('click', (event) => {
+                        event.stopPropagation()
+
+                        element.toggleCompleted()
+                        this.saveDataToLocalStorage()
+
+                        this.render()
+                    })
+
+                    const deleteTaskButton = document.createElement('button')
+                    deleteTaskButton.innerHTML = 'Usuń'
+                    deleteTaskButton.addEventListener('click', this.removeTask.bind(this, taskIndex))
+                    listElement.appendChild(deleteTaskButton)
+                    orderedList.appendChild(listElement)
+                }
+            })
+            listOfTaksBodyDiv.appendChild(orderedList)
         }
 
-        showCompletedTasks() {
+        showCompletedTasks(listOfTaksBodyDiv) {
+            listOfTaksBodyDiv.innerHTML = ''
 
+            const orderedList = document.createElement('ol')
+            this.tasks.forEach((element, taskIndex) => {
+
+                if (element.isCompleted === true) {
+                    const listElement = document.createElement('li')
+                    listElement.innerText = `${element.taskGoal}  `
+
+                    if (element.isCompleted === true) {
+                        listElement.style.textDecoration = 'line-through'
+                    }
+                    else {
+                        listElement.style.textDecoration = 'none'
+                    }
+
+                    listElement.addEventListener('click', (event) => {
+                        event.stopPropagation()
+
+                        element.toggleCompleted()
+
+                        this.render()
+                    })
+
+                    const deleteTaskButton = document.createElement('button')
+                    deleteTaskButton.innerHTML = 'Usuń'
+                    deleteTaskButton.addEventListener('click', this.removeTask.bind(this, taskIndex))
+                    listElement.appendChild(deleteTaskButton)
+                    orderedList.appendChild(listElement)
+                }
+            })
+            listOfTaksBodyDiv.appendChild(orderedList)
         }
 
-        showNotCompletedTasks() {
+        showNotCompletedTasks(listOfTaksBodyDiv) {
+            listOfTaksBodyDiv.innerHTML = ''
 
+            const orderedList = document.createElement('ol')
+            this.tasks.forEach((element, taskIndex) => {
+
+                if (element.isCompleted === false) {
+                    const listElement = document.createElement('li')
+                    listElement.innerText = `${element.taskGoal}  `
+
+                    if (element.isCompleted === true) {
+                        listElement.style.textDecoration = 'line-through'
+                    }
+                    else {
+                        listElement.style.textDecoration = 'none'
+                    }
+
+                    listElement.addEventListener('click', (event) => {
+                        event.stopPropagation()
+
+                        element.toggleCompleted()
+
+                        this.render()
+                    })
+
+                    const deleteTaskButton = document.createElement('button')
+                    deleteTaskButton.innerHTML = 'Usuń'
+                    deleteTaskButton.addEventListener('click', this.removeTask.bind(this, taskIndex))
+                    listElement.appendChild(deleteTaskButton)
+                    orderedList.appendChild(listElement)
+                }
+            })
+            listOfTaksBodyDiv.appendChild(orderedList)
         }
 
     }
