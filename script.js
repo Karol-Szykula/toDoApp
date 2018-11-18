@@ -24,12 +24,13 @@ class ToDoApp {
     render() {
         //render UI
         const appDiv = document.createElement('div')
-        appDiv.innerHTML = ''
 
         const addTaskInputField = document.createElement("input");
         addTaskInputField.setAttribute("type", "text");
         const inputTaskButton = document.createElement('button')
         inputTaskButton.innerHTML = 'Dodaj'
+
+        inputTaskButton.addEventListener('click', this.addTask.bind(this, addTaskInputField))
 
         const inputTaskDiv = document.createElement('div')
         inputTaskDiv.appendChild(addTaskInputField)
@@ -77,19 +78,37 @@ class ToDoApp {
         appDiv.appendChild(listOfTaksDiv)
 
         // fill UI with data
+        const orderedList = document.createElement('ol')
+        this.tasks.forEach((element, taskIndex) => {
+            const listElement = document.createElement('li')
+            listElement.innerText = `${element}`
+
+            //dodać kliknięcie na task - mark completed
+
+            const deleteTaskButton = document.createElement('button')
+            deleteTaskButton.innerHTML = 'Usuń'
+            deleteTaskButton.addEventListener('click', this.removeTask.bind(this, taskIndex))
+            listElement.appendChild(deleteTaskButton)
+
+            orderedList.appendChild(listElement)
+        })
+        listOfTaksBodyDiv.appendChild(orderedList)
 
 
-
-
+        this.whereToRender.innerHTML = ''
         this.whereToRender.appendChild(appDiv)
     }
 
-    addTask() {
+    addTask(addTaskInputField) {
+        this.tasks.push(addTaskInputField.value)
 
+        this.render()
     }
 
-    removeTask() {
+    removeTask(taskIndex) {
+        this.tasks.splice(taskIndex, 1);
 
+        this.render()
     }
 
     markTaskCompleted() {
