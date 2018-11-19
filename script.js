@@ -41,7 +41,7 @@
             this.render()
         }
 
-        render() {
+        renderUI() {
             //prepare UI elements
             const appDiv = document.createElement('div')
 
@@ -106,6 +106,12 @@
 
             this.whereToRender.innerHTML = ''
             this.whereToRender.appendChild(appDiv)
+
+            return listOfTaksBodyDiv
+        }
+
+        renderList() {
+
         }
 
         addTask(addTaskInputField) {
@@ -171,73 +177,11 @@
         }
 
         showCompletedTasks(listOfTaksBodyDiv) {
-            listOfTaksBodyDiv.innerHTML = ''
 
-            const orderedList = document.createElement('ol')
-            this.tasks.forEach((element, taskIndex) => {
-
-                if (element.isCompleted === true) {
-                    const listElement = document.createElement('li')
-                    listElement.innerText = `${element.taskGoal}  `
-
-                    if (element.isCompleted === true) {
-                        listElement.style.textDecoration = 'line-through'
-                    }
-                    else {
-                        listElement.style.textDecoration = 'none'
-                    }
-
-                    listElement.addEventListener('click', (event) => {
-                        event.stopPropagation()
-
-                        element.toggleCompleted()
-
-                        this.render()
-                    })
-
-                    const deleteTaskButton = document.createElement('button')
-                    deleteTaskButton.innerHTML = 'Usuń'
-                    deleteTaskButton.addEventListener('click', this.removeTask.bind(this, taskIndex))
-                    listElement.appendChild(deleteTaskButton)
-                    orderedList.appendChild(listElement)
-                }
-            })
-            listOfTaksBodyDiv.appendChild(orderedList)
         }
 
         showNotCompletedTasks(listOfTaksBodyDiv) {
-            listOfTaksBodyDiv.innerHTML = ''
 
-            const orderedList = document.createElement('ol')
-            this.tasks.forEach((element, taskIndex) => {
-
-                if (element.isCompleted === false) {
-                    const listElement = document.createElement('li')
-                    listElement.innerText = `${element.taskGoal}  `
-
-                    if (element.isCompleted === true) {
-                        listElement.style.textDecoration = 'line-through'
-                    }
-                    else {
-                        listElement.style.textDecoration = 'none'
-                    }
-
-                    listElement.addEventListener('click', (event) => {
-                        event.stopPropagation()
-
-                        element.toggleCompleted()
-
-                        this.render()
-                    })
-
-                    const deleteTaskButton = document.createElement('button')
-                    deleteTaskButton.innerHTML = 'Usuń'
-                    deleteTaskButton.addEventListener('click', this.removeTask.bind(this, taskIndex))
-                    listElement.appendChild(deleteTaskButton)
-                    orderedList.appendChild(listElement)
-                }
-            })
-            listOfTaksBodyDiv.appendChild(orderedList)
         }
 
     }
