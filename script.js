@@ -187,7 +187,10 @@
         }
 
         showNotCompletedTasks() {
-
+            const completedTasksArray = this.tasks.filter((element) => {
+                if (!element.isCompleted) return element
+            })
+            this.render(completedTasksArray)
         }
 
     }
