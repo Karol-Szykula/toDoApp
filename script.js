@@ -26,17 +26,17 @@
         init() {
             this.loadDataFromLocalStorage()
 
-            this.tasks.push(new Task('kupić mleko'))
-            this.tasks.push(new Task('wypić mleko'))
-            this.tasks.push(new Task('ugotować mleko'))
-            this.tasks.push(new Task('posprzątać dom'))
-            this.tasks.push(new Task('posprzątać garaż'))
-            this.tasks.push(new Task('pozamiatać'))
-            this.tasks.push(new Task('pozamiatać schody'))
-            this.tasks.push(new Task('pouczyć się'))
-            this.tasks.push(new Task('pouczyć się js'))
-            this.tasks.push(new Task('naprawić radio'))
-            this.tasks.push(new Task('odpocząć'))
+            // this.tasks.push(new Task('kupić mleko'))
+            // this.tasks.push(new Task('wypić mleko'))
+            // this.tasks.push(new Task('ugotować mleko'))
+            // this.tasks.push(new Task('posprzątać dom'))
+            // this.tasks.push(new Task('posprzątać garaż'))
+            // this.tasks.push(new Task('pozamiatać'))
+            // this.tasks.push(new Task('pozamiatać schody'))
+            // this.tasks.push(new Task('pouczyć się'))
+            // this.tasks.push(new Task('pouczyć się js'))
+            // this.tasks.push(new Task('naprawić radio'))
+            // this.tasks.push(new Task('odpocząć'))
 
             this.render()
         }
