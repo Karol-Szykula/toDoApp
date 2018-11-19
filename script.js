@@ -9,10 +9,6 @@
         toggleCompleted() {
             this.isCompleted = !this.isCompleted
         }
-
-        toggleVisible() {
-            this.isVisible = !this.isVisible
-        }
     }
 
     class ToDoApp {
@@ -26,17 +22,17 @@
         init() {
             this.loadDataFromLocalStorage()
 
-            this.tasks.push(new Task('kupić mleko'))
-            this.tasks.push(new Task('wypić mleko'))
-            this.tasks.push(new Task('ugotować mleko'))
-            this.tasks.push(new Task('posprzątać dom'))
-            this.tasks.push(new Task('posprzątać garaż'))
-            this.tasks.push(new Task('pozamiatać'))
-            this.tasks.push(new Task('pozamiatać schody'))
-            this.tasks.push(new Task('pouczyć się'))
-            this.tasks.push(new Task('pouczyć się js'))
-            this.tasks.push(new Task('naprawić radio'))
-            this.tasks.push(new Task('odpocząć'))
+            // this.tasks.push(new Task('kupić mlEko'))
+            // this.tasks.push(new Task('wypić mleko'))
+            // this.tasks.push(new Task('ugotować Mleko'))
+            // this.tasks.push(new Task('posprzątać dom'))
+            // this.tasks.push(new Task('posprZątać gAraż'))
+            // this.tasks.push(new Task('pozamiatać'))
+            // this.tasks.push(new Task('PozamiAtać sChody'))
+            // this.tasks.push(new Task('pouczyć się'))
+            // this.tasks.push(new Task('pouczyć się js'))
+            // this.tasks.push(new Task('naprawić radio'))
+            // this.tasks.push(new Task('odpocząć'))
 
             this.render()
         }
@@ -98,8 +94,7 @@
             listOfTaksDiv.appendChild(this.listOfTaksBodyDiv)
             appDiv.appendChild(listOfTaksDiv)
 
-            // this.showAllTasks(listOfTaksBodyDiv)
-            // findTaskButton.addEventListener('click', this.findTask.bind(this, findTaskInputField.value, listOfTaksBodyDiv))
+            findTaskButton.addEventListener('click', this.findTask.bind(this, findTaskInputField))
             showAllTasksButton.addEventListener('click', this.showAllTasks.bind(this))
             showCompletedTasksButton.addEventListener('click', this.showCompletedTasks.bind(this))
             showNotCompletedTasksButton.addEventListener('click', this.showNotCompletedTasks.bind(this))
@@ -170,12 +165,18 @@
             this.tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
         }
 
-        findTask(task, listOfTaksBodyDiv) {
+        findTask(findTaskInputField) {
 
+            let regToFind = new RegExp(findTaskInputField.value.toLowerCase().replace(/ /g, ''))
+
+            const completedTasksArray = this.tasks.filter((element) => {
+                let taskGoal = element.taskGoal.toLowerCase().replace(/ /g, '')
+                if (taskGoal.search(regToFind) > -1) return element
+            })
+            this.render(completedTasksArray)
         }
 
         showAllTasks() {
-
             this.render()
         }
 
@@ -187,10 +188,10 @@
         }
 
         showNotCompletedTasks() {
-            const completedTasksArray = this.tasks.filter((element) => {
+            const notCompletedTasksArray = this.tasks.filter((element) => {
                 if (!element.isCompleted) return element
             })
-            this.render(completedTasksArray)
+            this.render(notCompletedTasksArray)
         }
 
     }
