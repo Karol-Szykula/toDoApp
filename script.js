@@ -26,17 +26,17 @@
         init() {
             this.loadDataFromLocalStorage()
 
-            // this.tasks.push(new Task('kupić mleko'))
-            // this.tasks.push(new Task('wypić mleko'))
-            // this.tasks.push(new Task('ugotować mleko'))
-            // this.tasks.push(new Task('posprzątać dom'))
-            // this.tasks.push(new Task('posprzątać garaż'))
-            // this.tasks.push(new Task('pozamiatać'))
-            // this.tasks.push(new Task('pozamiatać schody'))
-            // this.tasks.push(new Task('pouczyć się'))
-            // this.tasks.push(new Task('pouczyć się js'))
-            // this.tasks.push(new Task('naprawić radio'))
-            // this.tasks.push(new Task('odpocząć'))
+            this.tasks.push(new Task('kupić mleko'))
+            this.tasks.push(new Task('wypić mleko'))
+            this.tasks.push(new Task('ugotować mleko'))
+            this.tasks.push(new Task('posprzątać dom'))
+            this.tasks.push(new Task('posprzątać garaż'))
+            this.tasks.push(new Task('pozamiatać'))
+            this.tasks.push(new Task('pozamiatać schody'))
+            this.tasks.push(new Task('pouczyć się'))
+            this.tasks.push(new Task('pouczyć się js'))
+            this.tasks.push(new Task('naprawić radio'))
+            this.tasks.push(new Task('odpocząć'))
 
             this.render()
         }
@@ -94,57 +94,29 @@
             listOfTaksDiv.appendChild(listOfTaksHeaderDiv)
             listOfTaksDiv.appendChild(listOfTaksHeaderDiv)
 
-            const listOfTaksBodyDiv = document.createElement('div')
-            listOfTaksDiv.appendChild(listOfTaksBodyDiv)
+            this.listOfTaksBodyDiv = document.createElement('div')
+            listOfTaksDiv.appendChild(this.listOfTaksBodyDiv)
             appDiv.appendChild(listOfTaksDiv)
 
-            this.showAllTasks(listOfTaksBodyDiv)
+            // this.showAllTasks(listOfTaksBodyDiv)
             // findTaskButton.addEventListener('click', this.findTask.bind(this, findTaskInputField.value, listOfTaksBodyDiv))
-            showAllTasksButton.addEventListener('click', this.showAllTasks.bind(this, listOfTaksBodyDiv))
-            showCompletedTasksButton.addEventListener('click', this.showCompletedTasks.bind(this, listOfTaksBodyDiv))
-            showNotCompletedTasksButton.addEventListener('click', this.showNotCompletedTasks.bind(this, listOfTaksBodyDiv))
+            showAllTasksButton.addEventListener('click', this.showAllTasks.bind(this))
+            showCompletedTasksButton.addEventListener('click', this.showCompletedTasks.bind(this))
+            showNotCompletedTasksButton.addEventListener('click', this.showNotCompletedTasks.bind(this))
 
             this.whereToRender.innerHTML = ''
             this.whereToRender.appendChild(appDiv)
-
-            return listOfTaksBodyDiv
         }
 
-        renderList() {
+        render(tasksToRender) {
+            this.renderUI()
 
-        }
+            const tasks = tasksToRender || this.tasks
 
-        addTask(addTaskInputField) {
-            this.tasks.push(new Task(addTaskInputField.value))
+            this.listOfTaksBodyDiv.innerHTML = ''
 
-            this.saveDataToLocalStorage()
-            this.render()
-        }
-
-        removeTask(taskIndex) {
-            this.tasks.splice(taskIndex, 1);
-            this.saveDataToLocalStorage()
-
-            this.render()
-        }
-
-        findTask(task, listOfTaksBodyDiv) {
-
-        }
-
-        saveDataToLocalStorage() {
-            localStorage.setItem('tasks', JSON.stringify(this.tasks));
-        }
-
-        loadDataFromLocalStorage() {
-            this.tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-        }
-
-        showAllTasks(listOfTaksBodyDiv) {
-            listOfTaksBodyDiv.innerHTML = ''
-            // console.log('showall')
             const orderedList = document.createElement('ol')
-            this.tasks.forEach((element, taskIndex) => {
+            tasks.forEach((element, taskIndex) => {
 
                 if (element.isVisible === true) {
                     const listElement = document.createElement('li')
@@ -173,14 +145,48 @@
                     orderedList.appendChild(listElement)
                 }
             })
-            listOfTaksBodyDiv.appendChild(orderedList)
+            this.listOfTaksBodyDiv.appendChild(orderedList)
         }
 
-        showCompletedTasks(listOfTaksBodyDiv) {
+        addTask(addTaskInputField) {
+            this.tasks.push(new Task(addTaskInputField.value))
+
+            this.saveDataToLocalStorage()
+            this.render()
+        }
+
+        removeTask(taskIndex) {
+            this.tasks.splice(taskIndex, 1);
+            this.saveDataToLocalStorage()
+
+            this.render()
+        }
+
+        saveDataToLocalStorage() {
+            localStorage.setItem('tasks', JSON.stringify(this.tasks));
+        }
+
+        loadDataFromLocalStorage() {
+            this.tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+        }
+
+        findTask(task, listOfTaksBodyDiv) {
 
         }
 
-        showNotCompletedTasks(listOfTaksBodyDiv) {
+        showAllTasks() {
+
+            this.render()
+        }
+
+        showCompletedTasks() {
+            const completedTasksArray = this.tasks.filter((element) => {
+                if (element.isCompleted) return element
+            })
+            this.render(completedTasksArray)
+        }
+
+        showNotCompletedTasks() {
 
         }
 
