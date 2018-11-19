@@ -98,11 +98,11 @@
             listOfTaksDiv.appendChild(listOfTaksBodyDiv)
             appDiv.appendChild(listOfTaksDiv)
 
+            this.showAllTasks(listOfTaksBodyDiv)
             // findTaskButton.addEventListener('click', this.findTask.bind(this, findTaskInputField.value, listOfTaksBodyDiv))
             showAllTasksButton.addEventListener('click', this.showAllTasks.bind(this, listOfTaksBodyDiv))
             showCompletedTasksButton.addEventListener('click', this.showCompletedTasks.bind(this, listOfTaksBodyDiv))
             showNotCompletedTasksButton.addEventListener('click', this.showNotCompletedTasks.bind(this, listOfTaksBodyDiv))
-            this.showAllTasks(listOfTaksBodyDiv)
 
             this.whereToRender.innerHTML = ''
             this.whereToRender.appendChild(appDiv)
@@ -122,7 +122,7 @@
             this.render()
         }
 
-        findTask(task) {
+        findTask(task, listOfTaksBodyDiv) {
 
         }
 
