@@ -162,7 +162,8 @@
         }
 
         loadDataFromLocalStorage() {
-            this.tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+            const dummyTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+            this.tasks = dummyTasks.map(task => Object.assign(Object.create(Task.prototype), task))
         }
 
         findTask(findTaskInputField) {
